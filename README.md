@@ -2,19 +2,50 @@
 
 Es una plataforma integral para la gestión de productividad personal, permitiendo a los usuarios organizar sus tareas diarias bajo un entorno seguro con persistencia de datos y autenticación robusta.
 
-# Tecnologías UtilizadasCapaTecnologíaPropósitoFrontendReact.js
+## Tecnologías Utilizadas
+
+## Frontend
 
 (JSX)Interfaz de usuario dinámica y reactiva.
 
-EstilosBootstrap v5.3 & CSS --- Diseño responsivo y componentes modernos.
+EstilosBootstrap v5.3.8 & CSS
 
-Backend Python/Node -- API REST para la lógica de negocio.
-
+Backend Node.js
 SeguridadJWT (JSON Web Tokens)Manejo de sesiones y protección de rutas.
 
 EstadoReact HooksuseState, useEffect, useContext para flujo de datos.
 
-# Características Técnicas
+## Backend
+
+- Node: será el cerebro del proyecto:
+
+* dependencias
+* scripts
+* metadata
+
+npm init -y
+
+- Express: Node solo puede crear servidores de forma muy manual, simplifica y hace la API más ligera:
+
+* rutas
+* requests
+* responses
+* middleware
+
+npm install express
+
+- Nodemon: Reinicia el servidor automáticamente cuando guardo cambios
+
+npm install -D nodemon
+
+## Rutas o archivos
+
+-todo_app
+
+backend/app.js
+frontend/src/components/views
+
+## Características Técnicas
 
 Autenticación: Registro de usuarios, Login y generación de tokens.
 
