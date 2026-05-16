@@ -2,6 +2,23 @@
 const express = require("express");
 const app = express();
 
+const dotenv = require("dotenv");
+dotenv.config();
+
+const pg = require("pg");
+const pool = new pg.Pool({
+  connectionString: process.env.DATABASE_URL,
+});
+
+pool
+  .query("SELECT NOW()")
+  .then(() => {
+    console.log("Connected to the database");
+  })
+  .catch((err) => {
+    console.error("Database connection error", err);
+  });
+
 app.listen(3000, () => {
   console.log("Server is running on http://localhost:3000");
 });
