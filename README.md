@@ -10,20 +10,19 @@ Es una plataforma integral para la gestión de productividad personal, permitien
 
 EstilosBootstrap v5.3.8 & CSS
 
-Backend Node.js
-SeguridadJWT (JSON Web Tokens)Manejo de sesiones y protección de rutas.
-
 EstadoReact HooksuseState, useEffect, useContext para flujo de datos.
 
 ## Backend
 
-- Node: será el cerebro del proyecto:
+- Node.js : será el cerebro del proyecto:
 
 * dependencias
 * scripts
 * metadata
 
 npm init -y
+
+- Seguridad JWT (JSON Web Tokens)Manejo de sesiones y protección de rutas.
 
 - Express: Node solo puede crear servidores de forma muy manual, simplifica y hace la API más ligera:
 
@@ -37,6 +36,10 @@ npm install express
 - Nodemon: Reinicia el servidor automáticamente cuando guardo cambios
 
 npm install -D nodemon
+
+# DB
+
+- PostgreSQL (Supabase)
 
 ## Rutas o archivos
 

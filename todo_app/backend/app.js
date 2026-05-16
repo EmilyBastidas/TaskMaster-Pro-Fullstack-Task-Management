@@ -26,3 +26,18 @@ app.post("/task", (req, res) => {
     title: "aprender javascript",
   });
 });
+
+app.put("/task/:id", (req, res) => {
+  const { id } = req.params;
+  res.send({
+    id,
+    title: "aprender javascript",
+  });
+});
+
+app.delete("/task/:id", (req, res) => {
+  const { id } = req.params;
+  res.send({
+    message: `Tarea con id ${id} eliminada`,
+  });
+});
