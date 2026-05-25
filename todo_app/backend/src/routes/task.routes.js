@@ -1,42 +1,66 @@
-//importacion express
 const express = require("express");
-//crear router
 const router = express.Router();
 
-//CRUD de tareas
-router.get("/", (req, res) => {
-  res.send([
-    {
-      id: 1,
-      title: "Aprender APIs",
-    },
-    {
-      id: 2,
-      title: "Aprender Node",
-    },
-  ]);
+const pool = require("./db");
+
+// GET ALL TASKS
+router.get("/", async (req, res) => {
+  try {
+    const result = await pool.query("SELECT * FROM tasks ORDER BY id ASC");
+    res.json(result.rows);
+  } catch (error) {
+    console.error("Error fetching tasks:", error);
+    res.status(500).json({ error: "Internal server error" });
+  }
 });
 
-router.post("/", (req, res) => {
-  res.send({
-    id: 3,
-    title: "aprender javascript",
-  });
+// CREATE TASK
+router.post("/", async (req, res) => {
+  try {
+    const { title } = req.body;
+
+    const result = await pool.query(
+      "INSERT INTO tasks (title, completed) VALUES ($1, false) RETURNING *",
+      [title],
+    );
+
+    res.status(201).json(result.rows[0]);
+  } catch (error) {
+    console.error("Error creating task:", error);
+    res.status(500).json({ error: "Internal server error" });
+  }
 });
 
-router.put("/:id", (req, res) => {
-  const { id } = req.params;
-  res.send({
-    id,
-    title: "aprender javascript",
-  });
+// UPDATE TASK
+router.put("/:id", async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { title, completed } = req.body;
+
+    const result = await pool.query(
+      "UPDATE tasks SET title = $1, completed = $2 WHERE id = $3 RETURNING *",
+      [title, completed, id],
+    );
+
+    res.json(result.rows[0]);
+  } catch (error) {
+    console.error("Error updating task:", error);
+    res.status(500).json({ error: "Internal server error" });
+  }
 });
 
-router.delete("/:id", (req, res) => {
-  const { id } = req.params;
-  res.send({
-    message: `Tarea con id ${id} eliminada`,
-  });
+// DELETE TASK
+router.delete("/:id", async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    await pool.query("DELETE FROM tasks WHERE id = $1", [id]);
+
+    res.json({ message: `Tarea con id ${id} eliminada` });
+  } catch (error) {
+    console.error("Error deleting task:", error);
+    res.status(500).json({ error: "Internal server error" });
+  }
 });
 
 module.exports = router;
