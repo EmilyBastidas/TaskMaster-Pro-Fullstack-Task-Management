@@ -2,9 +2,6 @@
 const express = require("express");
 const app = express();
 
-//conexion a database
-const pool = require("./db/connection");
-
 //middleware
 app.use(express.json());
 
