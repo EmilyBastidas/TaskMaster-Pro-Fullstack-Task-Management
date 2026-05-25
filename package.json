@@ -1,0 +1,21 @@
+{
+  "name": "todolist-practices",
+  "version": "1.0.0",
+  "description": "Es una plataforma integral para la gestión de productividad personal, permitiendo a los usuarios organizar sus tareas diarias bajo un entorno seguro con persistencia de datos y autenticación robusta.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/EmilyBastidas/TaskMaster-Pro-Fullstack-Task-Management.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/EmilyBastidas/TaskMaster-Pro-Fullstack-Task-Management/issues"
+  },
+  "homepage": "https://github.com/EmilyBastidas/TaskMaster-Pro-Fullstack-Task-Management#readme"
+}

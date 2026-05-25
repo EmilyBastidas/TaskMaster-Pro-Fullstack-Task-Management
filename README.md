@@ -59,3 +59,35 @@ Gestión de Estado Global: Uso de hooks para que el token de acceso esté dispon
 CRUD Protegido: Operaciones (Crear, Editar, Eliminar) que solo se ejecutan si el token es válido.
 
 Persistencia: Consumo de API propia creada desde cero.
+
+# Arquitectura de mi proyecto:
+
+backend/
+│
+├── node_modules/
+│
+├── src/
+│ │
+│ ├── routes/
+│ │ └── task.routes.js
+│ │
+│ ├── controllers/
+│ │ └── task.controller.js
+│ │
+│ ├── services/
+│ │ └── task.service.js
+│ │
+│ ├── db/
+│ │ └── connection.js
+│ │
+│ ├── middlewares/
+│ │ └── error.middleware.js
+│ │
+│ ├── utils/
+│ │
+│ └── app.js
+│
+├── .env
+├── .gitignore
+├── package.json
+└── README.md
