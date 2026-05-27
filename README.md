@@ -6,6 +6,8 @@ Es una plataforma integral para la gestión de productividad personal, permitien
 
 ## Frontend
 
+vite
+
 (JSX)Interfaz de usuario dinámica y reactiva.
 
 EstilosBootstrap v5.3.8 & CSS
@@ -39,7 +41,7 @@ npm install -D nodemon
 
 # DB
 
-- PostgreSQL (Supabase)
+- PostgreSQL (neon)
 
 ## Rutas o archivos
 
@@ -62,32 +64,27 @@ Persistencia: Consumo de API propia creada desde cero.
 
 # Arquitectura de mi proyecto:
 
-backend/
+todo-list-app/
 │
-├── node_modules/
+├── backend/
+│ ├── src/
+│ │ ├── routes/
+│ │ ├── controllers/
+│ │ ├── services/
+│ │ ├── db/
+│ │ └── app.js
+│ ├── package.json
+│ └── .env
 │
-├── src/
-│ │
-│ ├── routes/
-│ │ └── task.routes.js
-│ │
-│ ├── controllers/
-│ │ └── task.controller.js
-│ │
-│ ├── services/
-│ │ └── task.service.js
-│ │
-│ ├── db/
-│ │ └── connection.js
-│ │
-│ ├── middlewares/
-│ │ └── error.middleware.js
-│ │
-│ ├── utils/
-│ │
-│ └── app.js
+├── frontend/
+│ ├── src/
+│ │ ├── api/
+│ │ ├── components/
+│ │ ├── pages/
+│ │ ├── hooks/
+│ │ └── App.jsx
+│ ├── package.json
+│ └── .env
 │
-├── .env
-├── .gitignore
-├── package.json
-└── README.md
+├── README.md
+└── .gitignore

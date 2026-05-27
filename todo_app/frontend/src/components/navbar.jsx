@@ -1,4 +1,3 @@
-import React from "react";
 import { Link } from "react-router-dom";
 
 function Navbar() {
@@ -18,7 +17,7 @@ function Navbar() {
           <span className="me-2 fs-3" style={{ color: "#86b89a" }}>
             ♥
           </span>
-          TodoList
+          Taskify
         </a>
 
         <button
@@ -36,13 +35,13 @@ function Navbar() {
         <div className="collapse navbar-collapse" id="navbarNav">
           <ul className="navbar-nav ms-auto align-items-center">
             <li className="nav-item">
-              <Link className="nav-link active" to="/">
-                Inicio
+              <Link className="nav-link active" to="/login">
+                Inicio de sesión
               </Link>
             </li>
             <li className="nav-item">
-              <Link className="nav-link" to="/gatitos">
-                Tareas
+              <Link className="nav-link" to="/registrarse">
+                Registrarse
               </Link>
             </li>
           </ul>
