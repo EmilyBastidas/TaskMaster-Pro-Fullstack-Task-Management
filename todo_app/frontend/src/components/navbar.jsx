@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import { FaCheckDouble } from "react-icons/fa6";
 
 function Navbar() {
   return (
@@ -15,7 +16,7 @@ function Navbar() {
           href="/"
         >
           <span className="me-2 fs-3" style={{ color: "#86b89a" }}>
-            ♥
+            <FaCheckDouble />
           </span>
           Taskify
         </a>
@@ -36,11 +37,16 @@ function Navbar() {
           <ul className="navbar-nav ms-auto align-items-center">
             <li className="nav-item">
               <Link className="nav-link active" to="/login">
+                Dashboard
+              </Link>
+            </li>
+            <li className="nav-item">
+              <Link className="nav-link" to="/login">
                 Inicio de sesión
               </Link>
             </li>
             <li className="nav-item">
-              <Link className="nav-link" to="/registrarse">
+              <Link className="nav-link" to="/signup">
                 Registrarse
               </Link>
             </li>
