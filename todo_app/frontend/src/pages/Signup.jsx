@@ -1,6 +1,6 @@
 import { FaCheckDouble } from "react-icons/fa6";
 
-const Login = () => {
+const Signup = () => {
   return (
     <div className="container mt-2 mt-md-5">
       <span className="me-2 fs-1" style={{ color: "#86b89a" }}>
@@ -14,4 +14,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default Signup;
