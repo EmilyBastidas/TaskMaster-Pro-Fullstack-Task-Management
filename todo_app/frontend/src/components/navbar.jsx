@@ -36,7 +36,7 @@ function Navbar() {
         <div className="collapse navbar-collapse" id="navbarNav">
           <ul className="navbar-nav ms-auto align-items-center">
             <li className="nav-item">
-              <Link className="nav-link active" to="/login">
+              <Link className="nav-link active" to="/">
                 Dashboard
               </Link>
             </li>
