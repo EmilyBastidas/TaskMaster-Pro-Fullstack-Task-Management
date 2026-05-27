@@ -3,18 +3,16 @@ import "./App.css";
 
 import Navbar from "./components/Navbar";
 import Home from "./pages/Home";
-import Login from "./pages/Login";
 import Footer from "./components/Footer";
 
 function App() {
   return (
     <div className="d-flex flex-column min-vh-100">
-      {" "}
       <Navbar />
+
       <main className="flex-grow-1">
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/login" element={<Login />} />
 
           <Route
             path="*"
@@ -27,8 +25,8 @@ function App() {
           />
         </Routes>
       </main>
-      {/* Footer */}
-      {Footer && <Footer />}
+
+      <Footer />
     </div>
   );
 }
