@@ -1,11 +1,11 @@
 import { Routes, Route } from "react-router-dom";
 import "./App.css";
 
-import Navbar from "./components/Navbar";
+import Navbar from "./components/NavbarTemp";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
-import Footer from "../components/Footer";
+import Footer from "./components/footer";
 
 function App() {
   return (
