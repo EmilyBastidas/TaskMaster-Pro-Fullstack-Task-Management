@@ -1,114 +1,73 @@
-import { useState, useEffect } from "react";
-import { IoCloseOutline } from "react-icons/io5";
-
-//create your first component
+import { useEffect, useState } from "react";
+import { getTasks, createTask, deleteTask } from "../api/tasks.api";
 
 const Task = () => {
-  const [inputValue, setInputValue] = useState("");
-  const [todos, setTodos] = useState([]);
+  //estados para almacenar las tareas
 
-  useEffect(() => {
-    getTodos();
-  }, []);
+  const [todos, setTodos] = useState([]);
+  const [inputValue, setInputValue] = useState("");
 
   //listar tareas
 
-  const getTodos = () => {
-    fetch("http://localhost:3000/api/tasks")
-      .then((response) => {
-        if (response.status === 404) {
-          createTodos();
-        }
-        return response.json();
-      })
-      .then((data) => {
-        setTodos(data);
-      })
-      .catch((error) => {
-        console.log(error.message);
-      });
+  useEffect(() => {
+    loadTasks();
+  }, []);
+
+  const loadTasks = async () => {
+    const data = await getTasks();
+    setTodos(data);
   };
 
-  //borrar tarea
+  //crear tarea
 
-  const deleteTodos = (id) => {
-    fetch("http://localhost:3000/api/tasks/" + id, {
-      method: "DELETE",
-      headers: { "content-type": "application/json" },
-    })
-      .then((response) => {
-        console.log(response);
+  const handleAddTask = async () => {
+    if (!inputValue.trim()) return;
 
-        if (response.status === 404 || response.status === 204) {
-          getTodos();
-        }
-      })
-      .catch((error) => {
-        console.log(error.message);
-      });
+    const newTask = {
+      title: inputValue,
+    };
+
+    await createTask(newTask);
+
+    setInputValue("");
+    loadTasks(); // recarga lista actualizada
   };
 
-  let mensaje = null;
+  //eliminar tarea
 
-  if (todos.length === 0) {
-    mensaje = "No hay tareas, añadir tareas";
-  }
+  const handleDelete = async (id) => {
+    await deleteTask(id);
+    loadTasks(); // recarga lista actualizada
+  };
 
   return (
-    <div className="container">
-      <h1 className="mt-5 mb-5">todos</h1>
+    <div>
+      <h1>To Do List</h1>
 
-      <ul className="mx-auto">
-        <li>
-          <input
-            className="w-100"
-            type="text"
-            placeholder="What do you need?"
-            onChange={(e) => setInputValue(e.target.value)}
-            value={inputValue}
-            //crear tarea
-            onKeyDown={(e) => {
-              if (e.key === "Enter") {
-                if (inputValue.trim().length === 0) {
-                  console.log("tarea vacía");
-                  return;
-                }
-                fetch("http://localhost:3000/api/tasks", {
-                  method: "POST",
-                  headers: {
-                    "content-type": "application/json",
-                  },
-                  body: JSON.stringify({
-                    label: inputValue,
-                    is_done: false,
-                  }),
-                })
-                  .then((response) => response.json())
-                  .then((data) => {
-                    getTodos();
+      <input
+        type="text"
+        placeholder="Escribe una tarea..."
+        value={inputValue}
+        onChange={(e) => setInputValue(e.target.value)}
+      />
 
-                    setInputValue("");
-                  })
-                  .catch((error) => console.log(error.message));
-              }
-            }}
-          ></input>
-        </li>
+      <button onClick={handleAddTask}>Agregar</button>
 
-        {todos.map((items, index) => (
-          <li key={items.id} className="d-flex justify-content-between">
-            {items.label}{" "}
-            <IoCloseOutline
-              className="delete-icon"
-              onClick={() => deleteTodos(items.id)}
-            />
-          </li>
+      <ul>
+        {todos.map((task) => (
+          <li key={task.id}>{task.title}</li>
         ))}
-
-        <li className="contador"> {todos.length} item left</li>
       </ul>
 
-      {mensaje && <p>{mensaje}</p>}
+      <ul>
+        {todos.map((task) => (
+          <li key={task.id}>
+            {task.title}
+
+            <button onClick={() => handleDelete(task.id)}>❌</button>
+          </li>
+        ))}
+      </ul>
     </div>
   );
 };

@@ -2,7 +2,10 @@
 
 function Footer() {
   return (
-    <footer className="bg-dark text-white py-5 mt-auto text-center">
+    <footer
+      className="text-dark py-5 mt-auto text-center"
+      style={{ backgroundColor: "#fefefe" }}
+    >
       <div className="container-fluid row justify-content-center">
         <div className="col-md-12">
           <h5 className="mb-4 fw-bold">

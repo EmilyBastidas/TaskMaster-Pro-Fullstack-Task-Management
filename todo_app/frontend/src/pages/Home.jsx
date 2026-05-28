@@ -32,7 +32,10 @@ const Home = () => {
         </div>
       </section>
 
-      <section className="text-center py-5">
+      <section
+        className="text-center py-5"
+        style={{ backgroundColor: "#ffffff" }}
+      >
         <div className="container">
           <div className="row mt-4 justify-content-center">
             <div className="col-md-6">

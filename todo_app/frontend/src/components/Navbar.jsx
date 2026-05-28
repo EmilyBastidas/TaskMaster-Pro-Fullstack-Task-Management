@@ -3,10 +3,13 @@ import { FaCheckDouble } from "react-icons/fa6";
 
 function Navbar() {
   return (
-    <nav className="navbar navbar-expand-lg fixed-top bg-dark">
+    <nav
+      className="navbar navbar-expand-lg fixed-top"
+      style={{ backgroundColor: "#020202" }}
+    >
       <div className="container">
         <a
-          className="navbar-brand d-flex align-items-center fw-bold fs-4 text-white"
+          className="navbar-brand d-flex align-items-center fw-bold fs-4 text-light"
           href="/"
         >
           <span className="me-2 fs-3" style={{ color: "#86b89a" }}>
