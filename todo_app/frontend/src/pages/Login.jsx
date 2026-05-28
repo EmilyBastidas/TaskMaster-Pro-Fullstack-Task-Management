@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { FaCheckDouble } from "react-icons/fa";
 //import useGlobalReducer from "../hooks/useGlobalReducer";
 
 const Login = () => {
@@ -51,65 +52,83 @@ const Login = () => {
   };
 
   return (
-    <div className="container">
-      <div className="card mt-5 bg-black bg-gradient w-75 mx-auto">
-        <h1 className="mt-5 mb-5 text-light text-center">Iniciar Sesión</h1>
+    <div className="container text-center mt-2 mt-md-5">
+      <span className="me-2 " style={{ color: "#86b89a", fontSize: "7rem" }}>
+        <FaCheckDouble />
+      </span>
+      <h1 className="mt-1">Taskify</h1>
+      <div className="row justify-content-center">
+        <div className="col-md-6">
+          <div className="card mt-3 bg-light w-75 mx-auto mb-5 shadow-lg">
+            <h2 className="mt-5 text-dark text-center">Bienvenido de nuevo</h2>
+            <p className="mb-4 text-secondary text-center">
+              Inicia sesión en tu cuenta para continuar
+            </p>
 
-        <form className="row gy-3 mx-auto text-center" onSubmit={handleSubmit}>
-          <div className="col-6">
-            <div className="input-group">
-              <div className="input-group-text">@</div>
-              <input
-                type="text"
-                className="form-control"
-                placeholder="Correo electrónico"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                required
-              />
-            </div>
+            <form
+              className="row gy-3 mx-auto text-center"
+              onSubmit={handleSubmit}
+            >
+              <div className="col-md-6">
+                <div className="input-group">
+                  <div className="input-group-text">@</div>
+                  <input
+                    type="text"
+                    className="form-control"
+                    placeholder="Correo electrónico"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    required
+                  />
+                </div>
+              </div>
+
+              <div className="col-6">
+                <input
+                  type="password"
+                  className="form-control"
+                  placeholder="Ingrese su contraseña"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  required
+                />
+              </div>
+
+              <div className="col-auto">
+                <div className="form-check">
+                  <input
+                    className="form-check-input"
+                    type="checkbox"
+                    id="autoSizingCheck"
+                  />
+                  <label
+                    htmlFor="autoSizingCheck"
+                    className="form-check-label text-dark"
+                  >
+                    Recuérdame
+                  </label>
+                </div>
+              </div>
+
+              <div className="text-center">
+                <button
+                  type="submit"
+                  className="btn btn-lg text-light"
+                  style={{ backgroundColor: "#86b89a" }}
+                >
+                  Iniciar sesión
+                </button>
+              </div>
+
+              <p className="mt-3 link-light text-center">
+                ¿No tienes cuenta aún?{" "}
+                <Link to="/signup" className="link-dark">
+                  Regístrate aquí
+                </Link>
+              </p>
+            </form>
           </div>
-
-          <div className="col-6">
-            <input
-              type="password"
-              className="form-control"
-              placeholder="Ingrese su contraseña"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              required
-            />
-          </div>
-
-          <div className="col-auto">
-            <div className="form-check">
-              <input
-                className="form-check-input"
-                type="checkbox"
-                id="autoSizingCheck"
-              />
-              <label
-                htmlFor="autoSizingCheck"
-                className="form-check-label text-light"
-              >
-                Recuérdame
-              </label>
-            </div>
-          </div>
-
-          <div className="text-center">
-            <button type="submit" className="btn btn-lg btn-info">
-              Enviar
-            </button>
-          </div>
-
-          <p className="mt-3 link-light text-center">
-            ¿No tienes cuenta aún?{" "}
-            <Link to="/signup" className="link-info">
-              Regístrate aquí
-            </Link>
-          </p>
-        </form>
+        </div>
       </div>
     </div>
   );
