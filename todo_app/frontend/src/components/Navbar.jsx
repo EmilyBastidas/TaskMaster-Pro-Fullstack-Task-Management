@@ -15,7 +15,7 @@ function Navbar() {
           className="navbar-brand d-flex align-items-center fw-bold fs-4"
           href="/"
         >
-          <span className="me-2 fs-3" style={{ color: "#86b89a" }}>
+          <span className="me-2 fs-3" style={{ color: "#08c1f9ff" }}>
             <FaCheckDouble />
           </span>
           Taskify
