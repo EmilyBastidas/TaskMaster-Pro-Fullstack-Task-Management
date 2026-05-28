@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { getTasks, createTask, deleteTask } from "../api/tasks.api";
+import { MdDeleteForever } from "react-icons/md";
 
 const Task = () => {
   //estados para almacenar las tareas
@@ -10,13 +11,13 @@ const Task = () => {
   //listar tareas
 
   useEffect(() => {
-    loadTasks();
-  }, []);
+    const fetchTasks = async () => {
+      const data = await getTasks();
+      setTodos(Array.isArray(data) ? data : []);
+    };
 
-  const loadTasks = async () => {
-    const data = await getTasks();
-    setTodos(data);
-  };
+    fetchTasks();
+  }, []);
 
   //crear tarea
 
@@ -27,17 +28,20 @@ const Task = () => {
       title: inputValue,
     };
 
-    await createTask(newTask);
-
+    const created = await createTask(newTask);
+    setTodos((prev) => [...prev, created]);
     setInputValue("");
-    loadTasks(); // recarga lista actualizada
   };
 
   //eliminar tarea
 
-  const handleDelete = async (id) => {
-    await deleteTask(id);
-    loadTasks(); // recarga lista actualizada
+  const handleDeleteTask = async (id) => {
+    try {
+      await deleteTask(id);
+      setTodos((prev) => prev.filter((t) => t.id !== id));
+    } catch (error) {
+      console.error("Error eliminando tarea:", error);
+    }
   };
 
   return (
@@ -63,8 +67,9 @@ const Task = () => {
         {todos.map((task) => (
           <li key={task.id}>
             {task.title}
-
-            <button onClick={() => handleDelete(task.id)}>❌</button>
+            <button onClick={() => handleDeleteTask(task.id)}>
+              <MdDeleteForever />
+            </button>
           </li>
         ))}
       </ul>
