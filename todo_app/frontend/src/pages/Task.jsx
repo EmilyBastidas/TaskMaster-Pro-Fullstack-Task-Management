@@ -17,29 +17,12 @@ const Task = () => {
     fetch("http://localhost:3000/api/tasks")
       .then((response) => {
         if (response.status === 404) {
-          createUser();
+          createTodos();
         }
         return response.json();
       })
       .then((data) => {
-        setTodos(data.todos);
-      })
-      .catch((error) => {
-        console.log(error.message);
-      });
-  };
-
-  //crear usuarios
-
-  const createUser = () => {
-    fetch("http://localhost:3000/api/tasks", {
-      method: "POST",
-      headers: { "content-type": "application/json" },
-    })
-      .then((response) => {
-        if (response.status === 404 || response.status === 200) {
-          getTodos();
-        }
+        setTodos(data);
       })
       .catch((error) => {
         console.log(error.message);
