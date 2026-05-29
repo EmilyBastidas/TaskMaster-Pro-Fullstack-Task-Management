@@ -1,15 +1,18 @@
-// express
 const express = require("express");
 const app = express();
 
-//middleware
+// middleware
 app.use(express.json());
 
-//rutas
+// rutas
 const taskRoutes = require("./routes/task.routes");
-app.use("/api/todos", taskRoutes);
+const authRoutes = require("./routes/auth.routes");
 
-//levantar servidor
+// endpoints
+app.use("/api/tasks", taskRoutes);
+app.use("/api/auth", authRoutes);
+
+// levantar servidor
 app.listen(3000, () => {
   console.log("Server is running on http://localhost:3000");
 });

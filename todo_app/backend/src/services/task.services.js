@@ -5,11 +5,16 @@ const getTasks = async () => {
   return result.rows;
 };
 
-const createTask = async (title) => {
+const createTask = async (title, userId) => {
   const result = await pool.query(
-    "INSERT INTO tasks (title, completed) VALUES ($1, false) RETURNING *",
-    [title],
+    `
+    INSERT INTO tasks (title, user_id)
+    VALUES ($1, $2)
+    RETURNING *
+    `,
+    [title, userId],
   );
+
   return result.rows[0];
 };
 
