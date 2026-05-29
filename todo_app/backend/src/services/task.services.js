@@ -1,7 +1,16 @@
 const pool = require("../db/connection");
 
-const getTasks = async () => {
-  const result = await pool.query("SELECT * FROM tasks ORDER BY id ASC");
+const getTasks = async (userId) => {
+  const result = await pool.query(
+    `
+    SELECT *
+    FROM tasks
+    WHERE user_id = $1
+    ORDER BY id DESC
+    `,
+    [userId],
+  );
+
   return result.rows;
 };
 
