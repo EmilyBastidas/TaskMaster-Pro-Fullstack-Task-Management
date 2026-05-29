@@ -1,38 +1,76 @@
-const BASE_URL = "http://localhost:3000/api/tasks";
+const API_URL = `${import.meta.env.VITE_BACKEND_URL}/api/tasks`;
 
-//listar tareas
-export const getTasks = () => {
-  return fetch("http://localhost:3000/api/tasks").then((res) => res.json());
+// LISTAR
+export const getTasks = async () => {
+  const token = localStorage.getItem("token");
+
+  const response = await fetch(API_URL, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+
+  if (!response.ok) {
+    throw new Error("Error al obtener tareas");
+  }
+
+  return await response.json();
 };
 
-//crear tarea
+// CREAR
+export const createTask = async (task) => {
+  const token = localStorage.getItem("token");
 
-export const createTask = (task) => {
-  return fetch("http://localhost:3000/api/tasks", {
+  const response = await fetch(API_URL, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
     },
     body: JSON.stringify(task),
-  }).then((res) => res.json());
+  });
+
+  if (!response.ok) {
+    throw new Error("Error al crear tarea");
+  }
+
+  return await response.json();
 };
 
-//eliminar tarea
+// ELIMINAR
+export const deleteTask = async (id) => {
+  const token = localStorage.getItem("token");
 
-export const deleteTask = (id) => {
-  return fetch(`http://localhost:3000/api/tasks/${id}`, {
+  const response = await fetch(`${API_URL}/${id}`, {
     method: "DELETE",
-  }).then((res) => res.json());
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+
+  if (!response.ok) {
+    throw new Error("Error al eliminar tarea");
+  }
+
+  return true;
 };
 
-//actualizar tarea
+// ACTUALIZAR
+export const updateTask = async (id, updatedTask) => {
+  const token = localStorage.getItem("token");
 
-export const updateTask = (id, task) => {
-  return fetch(`${BASE_URL}/${id}`, {
+  const response = await fetch(`${API_URL}/${id}`, {
     method: "PUT",
     headers: {
       "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
     },
-    body: JSON.stringify(task),
-  }).then((res) => res.json());
+    body: JSON.stringify(updatedTask),
+  });
+
+  if (!response.ok) {
+    throw new Error("Error al actualizar tarea");
+  }
+
+  return await response.json();
 };

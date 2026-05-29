@@ -22,31 +22,35 @@ const Login = () => {
         `${import.meta.env.VITE_BACKEND_URL}/api/auth/login`,
         {
           method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ email, password }),
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            email,
+            password,
+          }),
         },
       );
 
+      const data = await res.json();
+
       if (!res.ok) {
-        alert("Credenciales inválidas");
+        alert(data.message || "Credenciales inválidas");
         return;
       }
 
-      const data = await res.json();
-      const token = data.datos.access_token;
-      const user = data.datos.user;
+      // token jwt
+      const token = data.token;
 
+      // guardar token
       localStorage.setItem("token", token);
-      localStorage.setItem("user", JSON.stringify(user));
 
-      /*dispatch({
-        type: "LOGIN_SUCCESS",
-        payload: { token, user },
-      });*/
+      alert("Login exitoso");
 
-      navigate("/profile");
+      navigate("/tasks");
     } catch (error) {
       console.error(error);
+
       alert("Error en el servidor");
     }
   };
