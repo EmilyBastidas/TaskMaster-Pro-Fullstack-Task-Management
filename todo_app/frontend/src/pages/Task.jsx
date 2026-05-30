@@ -9,7 +9,7 @@ const Task = () => {
   const [inputValue, setInputValue] = useState("");
   const [error, setError] = useState(false);
 
-  // estados para controlar la modificacion de tareas
+  //estados para controlar la modificacion de tareas
   const [editingId, setEditingId] = useState(null);
   const [editValue, setEditValue] = useState("");
   const [editError, setEditError] = useState(false);
@@ -78,7 +78,7 @@ const Task = () => {
         ),
       );
 
-      //salir de edit
+      // salir de edit
       setEditingId(null);
       setEditValue("");
     } catch (error) {
@@ -98,7 +98,7 @@ const Task = () => {
 
   const handleToggleComplete = async (task) => {
     try {
-      // 🔥 Creamos una copia de la tarea completa (...task) pero sobreescribimos is_done
+      // Creamos una copia de la tarea completa (...task) pero sobreescribimos is_done
       const updatedTaskBody = {
         ...task,
         is_done: !task.is_done,
@@ -281,7 +281,7 @@ const Task = () => {
             ))
           ) : (
             <div className="text-center py-4 text-muted bg-white rounded-4 shadow-sm">
-              No tienes tareas activas hoy. ¡Buen trabajo!
+              No tienes tareas activas hoy
             </div>
           )}
         </div>
