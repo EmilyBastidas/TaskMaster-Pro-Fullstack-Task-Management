@@ -10,30 +10,49 @@ const Signup = () => {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const navigate = useNavigate();
-
   const handleRegistro = async (e) => {
     e.preventDefault();
 
-    // Validamos campos vacíos
-    if (!name || !lastName || !email || !password || !confirmPassword) {
+    // Validar campos vacíos
+    if (
+      !name.trim() ||
+      !lastName.trim() ||
+      !email.trim() ||
+      !password ||
+      !confirmPassword
+    ) {
       alert("Por favor complete todos los campos");
       return;
     }
-    // Validar la coincidencia de contraseña
+
+    // Validar formato de email
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+    if (!emailRegex.test(email)) {
+      alert("Ingrese un correo electrónico válido");
+      return;
+    }
+
+    // Validar longitud mínima de contraseña
+    if (password.length < 6) {
+      alert("La contraseña debe tener al menos 6 caracteres");
+      return;
+    }
+
+    // Validar coincidencia de contraseñas
     if (password !== confirmPassword) {
       alert("Las contraseñas no coinciden");
       return;
     }
-
-    // localStorage.setItem("Name", Name);
-    // navigate("/login");
 
     try {
       const res = await fetch(
         `${import.meta.env.VITE_BACKEND_URL}/api/auth/register`,
         {
           method: "POST",
-          headers: { "Content-Type": "application/json" },
+          headers: {
+            "Content-Type": "application/json",
+          },
           body: JSON.stringify({
             name,
             last_name: lastName,
@@ -43,19 +62,20 @@ const Signup = () => {
         },
       );
 
+      const data = await res.json();
+
       if (!res.ok) {
-        alert("Error al registrarse");
+        alert(data.message || "Error al registrarse");
         return;
       }
 
       alert("Usuario creado exitosamente");
       navigate("/login");
     } catch (error) {
-      console.error(error);
+      console.error("Error:", error);
       alert("Error en el servidor");
     }
   };
-
   return (
     <div className="container text-center mt-2 mt-md-5">
       <span className="me-2 " style={{ color: "#86b89a", fontSize: "4rem" }}>
@@ -94,14 +114,14 @@ const Signup = () => {
                 <div className="input-group">
                   <div className="input-group-text">@</div>
                   <input
-                    type="text"
+                    type="email"
                     className="form-control"
                     id="autoSizingInputGroupEmail"
                     placeholder="Correo electrónico"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     required
-                  ></input>
+                  />
                 </div>
               </div>
 
