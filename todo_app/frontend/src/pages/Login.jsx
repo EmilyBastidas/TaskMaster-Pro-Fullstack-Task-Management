@@ -130,6 +130,12 @@ const Login = () => {
                   Regístrate aquí
                 </Link>
               </p>
+              <p>
+                ¿Olvidaste tu contraseña?
+                <Link to="/reset-password" className="link-dark">
+                  Restablecer aquí
+                </Link>
+              </p>
             </form>
           </div>
         </div>
