@@ -116,7 +116,7 @@ const Task = () => {
     }
   };
   return (
-    <div className="container mt-5" style={{ maxWidth: "700px" }}>
+    <div className="container mt-5 p-5" style={{ maxWidth: "700px" }}>
       {/* ENCABEZADO */}
       <div className="mb-4">
         <h1 className="fw-bold text-dark m-0">My Tasks</h1>

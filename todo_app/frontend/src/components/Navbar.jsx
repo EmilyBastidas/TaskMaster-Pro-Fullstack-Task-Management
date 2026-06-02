@@ -1,7 +1,16 @@
 import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { FaCheckDouble } from "react-icons/fa6";
+import { IoLogOutSharp } from "react-icons/io5";
 
 function Navbar() {
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    navigate("/");
+  };
+
   return (
     <nav
       className="navbar navbar-expand-lg fixed-top"
@@ -50,6 +59,13 @@ function Navbar() {
           </ul>
         </div>
       </div>
+
+      <IoLogOutSharp
+        size={24}
+        style={{ cursor: "pointer" }}
+        onClick={handleLogout}
+        title="Cerrar sesión"
+      />
     </nav>
   );
 }
