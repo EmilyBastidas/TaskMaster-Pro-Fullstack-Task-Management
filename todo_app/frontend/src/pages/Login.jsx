@@ -125,7 +125,7 @@ const Login = () => {
               </div>
 
               <p className="mt-3 link-light text-center">
-                ¿No tienes cuenta aún?{" "}
+                ¿No tienes cuenta?{" "}
                 <Link to="/signup" className="link-dark">
                   Regístrate aquí
                 </Link>
@@ -133,7 +133,7 @@ const Login = () => {
               <p>
                 ¿Olvidaste tu contraseña?
                 <Link to="/reset-password" className="link-dark">
-                  Restablecer aquí
+                  Restablecer contraseña
                 </Link>
               </p>
             </form>
