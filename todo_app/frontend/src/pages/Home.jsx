@@ -66,7 +66,7 @@ const Home = () => {
       </section>
 
       <section className="text-center bg-light py-5">
-        <div className="container">
+        <div className="container-fluid">
           <h2>Todo lo que necesitas para mantenerte organizado</h2>
 
           <div className="row mt-4 justify-content-center">
