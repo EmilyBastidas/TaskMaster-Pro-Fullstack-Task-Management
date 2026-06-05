@@ -61,7 +61,7 @@ function Navbar() {
       </div>
 
       <IoLogOutSharp
-        size={24}
+        size={27}
         style={{ cursor: "pointer" }}
         onClick={handleLogout}
         title="Cerrar sesión"

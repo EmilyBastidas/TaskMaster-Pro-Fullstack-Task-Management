@@ -13,7 +13,7 @@ const Login = () => {
     e.preventDefault();
 
     if (!email || !password) {
-      alert("Por favor complete todos los campos");
+      alert("Por favor complete los campos");
       return;
     }
 
@@ -35,7 +35,7 @@ const Login = () => {
       const data = await res.json();
 
       if (!res.ok) {
-        alert(data.message || "Credenciales inválidas");
+        alert(data.message || "Contraseña/correo incorrectos");
         return;
       }
 
