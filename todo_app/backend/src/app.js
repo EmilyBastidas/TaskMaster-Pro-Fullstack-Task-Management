@@ -15,7 +15,10 @@ const authRoutes = require("./routes/auth.routes");
 app.use("/api/tasks", taskRoutes);
 app.use("/api/auth", authRoutes);
 
+// puerto para local y producción
+const PORT = process.env.PORT || 3000;
+
 // levantar servidor
-app.listen(3000, () => {
-  console.log("Server is running on http://localhost:3000");
+app.listen(PORT, () => {
+  console.log(`Server is running on port ${PORT}`);
 });
