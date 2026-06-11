@@ -17,5 +17,8 @@
   "bugs": {
     "url": "https://github.com/EmilyBastidas/TaskMaster-Pro-Fullstack-Task-Management/issues"
   },
-  "homepage": "https://github.com/EmilyBastidas/TaskMaster-Pro-Fullstack-Task-Management#readme"
+  "homepage": "https://github.com/EmilyBastidas/TaskMaster-Pro-Fullstack-Task-Management#readme",
+  "dependencies": {
+    "dotenv": "^17.4.2"
+  }
 }
