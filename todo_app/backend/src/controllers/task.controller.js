@@ -12,11 +12,11 @@ const getTasks = async (req, res) => {
 const createTask = async (req, res) => {
   try {
     const { title } = req.body;
-
     const userId = req.user.id;
 
-    const tasks = await taskService.getTasks(userId);
-    res.json(tasks);
+    const newTask = await taskService.createTask(title, userId);
+
+    return res.status(201).json(newTask);
   } catch (error) {
     res.status(500).json({ error: error.message });
   }

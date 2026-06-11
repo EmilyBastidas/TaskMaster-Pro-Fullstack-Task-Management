@@ -1,6 +1,6 @@
-# TaskMaster Pro: Fullstack Task Management
+# Taskify: Fullstack Task Management
 
-Es una plataforma integral para la gestión de productividad personal, permitiendo a los usuarios organizar sus tareas diarias bajo un entorno seguro con persistencia de datos y autenticación robusta.
+Es una plataforma integral para la gestión de productividad personal y de empresas, permitiendo a los usuarios y participantes de equipos organizar sus tareas diarias bajo un entorno seguro con persistencia de datos y autenticación robusta.
 
 ## Tecnologías Utilizadas
 
@@ -10,7 +10,7 @@ vite
 
 (JSX)Interfaz de usuario dinámica y reactiva.
 
-EstilosBootstrap v5.3.8 & CSS
+Estilos Bootstrap v5.3.8 & CSS
 
 EstadoReact HooksuseState, useEffect, useContext para flujo de datos.
 
