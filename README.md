@@ -21,6 +21,21 @@ Este proyecto representa una implementación completa de una aplicación Full St
 
 ---
 
+## Desafíos técnicos enfrentados
+
+Durante el desarrollo de Taskify se resolvieron distintos desafíos técnicos relacionados con:
+
+- Implementación de autenticación basada en JWT.
+- Protección de rutas privadas.
+- Integración entre frontend y backend.
+- Persistencia de datos en PostgreSQL.
+- Manejo de estados en React.
+- Configuración de variables de entorno para distintos entornos.
+- Despliegue Full Stack utilizando Vercel, Render y Neon.
+- Gestión de credenciales y seguridad básica de la aplicación.
+
+---
+
 ## Problema
 
 La gestión del tiempo y la organización personal representan uno de los principales desafíos de productividad en la vida cotidiana.
@@ -76,6 +91,27 @@ Taskify fue desarrollado como una herramienta sencilla y accesible para ayudar a
 ---
 
 ## Arquitectura del proyecto
+
+## Arquitectura general
+
+```text
+┌─────────────┐
+│   React     │
+│  Frontend   │
+└──────┬──────┘
+       │ HTTP / JSON
+       ▼
+┌─────────────┐
+│   Express   │
+│   Backend   │
+└──────┬──────┘
+       │ SQL
+       ▼
+┌─────────────┐
+│ PostgreSQL  │
+│    Neon     │
+└─────────────┘
+```
 
 ### Frontend
 
@@ -268,6 +304,32 @@ Actualmente me encuentro trabajando en nuevas funcionalidades para mejorar la ex
 
 ---
 
+## Roadmap
+
+### Versión 1.1
+
+- Edición de tareas.
+- Filtros por estado.
+- Contador dinámico de tareas completadas.
+
+### Versión 1.2
+
+- Dashboard de productividad.
+- Gráficos y estadísticas.
+- Métricas semanales y mensuales.
+
+### Versión 1.3
+
+- Fechas límite.
+- Recordatorios.
+- Notificaciones.
+
+### Versión 2.0
+
+- Colaboración entre usuarios.
+- Equipos y proyectos compartidos.
+- Aplicación móvil.
+
 ## Estado del proyecto
 
 Actualmente el proyecto se encuentra en desarrollo activo.
@@ -275,6 +337,14 @@ Actualmente el proyecto se encuentra en desarrollo activo.
 Las funcionalidades principales están implementadas y desplegadas en producción. Las próximas versiones incorporarán herramientas de análisis y seguimiento de productividad mediante un dashboard interactivo.
 
 ---
+
+## Demo
+
+Frontend:
+https://task-master-pro-fullstack-task-management-l0oqugrag.vercel.app
+
+Backend API:
+https://taskmaster-pro-fullstack-task-management-m920.onrender.com
 
 ## Licencia
 
