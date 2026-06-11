@@ -6,6 +6,14 @@ const pool = require("../db/connection");
 const register = async ({ email, password }) => {
   const hashedPassword = await bcrypt.hash(password, 10);
 
+  const existingUser = await pool.query(
+    "SELECT id FROM users WHERE email = $1",
+    [email],
+  );
+
+  if (existingUser.rows.length > 0) {
+    throw new Error("Email en uso, por favor verifiquelo");
+  }
   const result = await pool.query(
     `
     INSERT INTO users (email, password)
@@ -28,7 +36,7 @@ const login = async ({ email, password }) => {
   );
 
   if (result.rows.length === 0) {
-    throw new Error("User not found");
+    throw new Error("Usuario no encontrado");
   }
 
   const user = result.rows[0];
@@ -36,7 +44,7 @@ const login = async ({ email, password }) => {
   const isValid = await bcrypt.compare(password, user.password);
 
   if (!isValid) {
-    throw new Error("Invalid password");
+    throw new Error("Contraseña inválida");
   }
 
   const token = jwt.sign(
