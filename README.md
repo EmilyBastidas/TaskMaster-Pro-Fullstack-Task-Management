@@ -23,20 +23,20 @@ Este proyecto representa una implementación completa de una aplicación Full St
 
 ## Problema
 
-La gestión del tiempo y la organización personal son desafíos comunes en la vida cotidiana.
+La gestión del tiempo y la organización personal representan uno de los principales desafíos de productividad en la vida cotidiana.
 
-Diversos estudios indican que una parte importante de las personas olvida tareas, compromisos o actividades importantes debido a la sobrecarga de información y a la falta de sistemas efectivos de seguimiento.
+Diversas investigaciones sobre memoria prospectiva (la capacidad de recordar realizar acciones planificadas en el futuro) indican que las personas suelen olvidar entre el 50% y el 80% de las intenciones que no registran en sistemas externos de organización.
 
-Según investigaciones sobre productividad y memoria prospectiva, entre un 40% y un 60% de las personas reportan olvidar regularmente tareas pendientes o compromisos programados.
+Además, estudios publicados por la American Psychological Association (APA) y diversos investigadores en psicología cognitiva muestran que la sobrecarga de información, las interrupciones constantes y la multitarea incrementan significativamente la probabilidad de olvidar tareas y compromisos importantes.
 
-Esta situación puede generar:
+Las consecuencias más frecuentes incluyen:
 
-- Disminución de la productividad
-- Estrés innecesario
-- Retrasos en actividades importantes
-- Dificultades para mantener hábitos organizados
+- Disminución de la productividad.
+- Retrasos en actividades importantes.
+- Estrés y carga mental innecesaria.
+- Dificultad para mantener hábitos organizados.
 
-Taskify nace como una solución simple para registrar, visualizar y gestionar tareas desde cualquier dispositivo con acceso a internet.
+Taskify fue desarrollado como una herramienta sencilla y accesible para ayudar a las personas a registrar, organizar y completar sus tareas de manera eficiente desde cualquier dispositivo con acceso a internet.
 
 ---
 
@@ -279,3 +279,10 @@ Las funcionalidades principales están implementadas y desplegadas en producció
 ## Licencia
 
 Este proyecto fue desarrollado con fines educativos, de aprendizaje y de portafolio profesional.
+
+## Referencias
+
+- American Psychological Association (APA)
+- Einstein, G. O., & McDaniel, M. A. (Prospective Memory Research)
+- Journal of Applied Psychology
+- Harvard Business Review – Productivity and Task Management Studies
