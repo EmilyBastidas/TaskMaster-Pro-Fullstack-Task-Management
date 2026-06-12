@@ -9,21 +9,12 @@ const Task = () => {
   const [inputValue, setInputValue] = useState("");
   const [error, setError] = useState(false);
 
+  //estados para controlar la modificacion de tareas
   const [editingId, setEditingId] = useState(null);
   const [editValue, setEditValue] = useState("");
   const [editError, setEditError] = useState(false);
 
   const navigate = useNavigate();
-
-  // 🔥 FUNCIÓN CENTRAL PARA CARGAR TAREAS
-  const refreshTasks = async () => {
-    try {
-      const data = await getTasks();
-      setTodos(Array.isArray(data) ? data : []);
-    } catch (error) {
-      console.error("Error cargando tareas:", error);
-    }
-  };
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -33,10 +24,19 @@ const Task = () => {
       return;
     }
 
-    refreshTasks();
+    const fetchTasks = async () => {
+      try {
+        const data = await getTasks();
+        setTodos(Array.isArray(data) ? data : []);
+      } catch (error) {
+        console.error("Error cargando tareas:", error);
+      }
+    };
+
+    fetchTasks();
   }, [navigate]);
 
-  // ➕ AGREGAR TAREA
+  // add tarea
   const handleAddTask = async () => {
     if (!inputValue.trim()) {
       setError(true);
@@ -46,15 +46,22 @@ const Task = () => {
     setError(false);
 
     try {
-      await createTask({ title: inputValue });
+      const newTask = { title: inputValue };
+      const created = await createTask(newTask);
+
+      if (!created || !created.id) {
+        console.error("Task inválida:", created);
+        return;
+      }
+
+      setTodos((prev) => [...prev, created]);
       setInputValue("");
-      await refreshTasks(); // 👈 importante
     } catch (error) {
       console.error("Error creando tarea:", error);
     }
   };
 
-  // ✏️ ACTUALIZAR TAREA
+  //modificar tarea
   const handleUpdateTask = async (id) => {
     if (!editValue.trim()) {
       setEditError(true);
@@ -65,39 +72,49 @@ const Task = () => {
 
     try {
       await updateTask(id, { title: editValue });
+      setTodos((prev) =>
+        prev.map((task) =>
+          task.id === id ? { ...task, title: editValue } : task,
+        ),
+      );
+
+      // salir de edit
       setEditingId(null);
       setEditValue("");
-      await refreshTasks();
     } catch (error) {
       console.error("Error modificando tarea:", error);
     }
   };
 
-  // 🗑️ ELIMINAR TAREA
+  // eliminar tarea
   const handleDeleteTask = async (id) => {
     try {
       await deleteTask(id);
-      await refreshTasks();
+      setTodos((prev) => prev.filter((t) => t.id !== id));
     } catch (error) {
       console.error("Error eliminando tarea:", error);
     }
   };
 
-  // ✔ TOGGLE COMPLETADO
   const handleToggleComplete = async (task) => {
     try {
+      // Creamos una copia de la tarea completa (...task) pero sobreescribimos is_done
       const updatedTaskBody = {
         ...task,
         is_done: !task.is_done,
       };
 
+      // Se lo enviamos completo a la API
       await updateTask(task.id, updatedTaskBody);
-      await refreshTasks();
+
+      // Actualizamos el estado local de React (esto se queda igual)
+      setTodos((prev) =>
+        prev.map((t) => (t.id === task.id ? { ...t, is_done: !t.is_done } : t)),
+      );
     } catch (error) {
       console.error("Error al cambiar el estado de la tarea:", error);
     }
   };
-
   return (
     <div className="container mt-5 p-5" style={{ maxWidth: "700px" }}>
       {/* ENCABEZADO */}
@@ -108,15 +125,13 @@ const Task = () => {
         </p>
       </div>
 
-      {/* AGREGAR TAREA */}
+      {/* TARJETA DE AGREGAR TAREA */}
       <div className="card border-0 shadow-sm rounded-4 p-3 mb-3 bg-white">
         <div className="row g-2">
           <div className="col">
             <input
               type="text"
-              className={`form-control border-light-subtle bg-light-subtle rounded-3 py-2 ${
-                error ? "is-invalid" : ""
-              }`}
+              className={`form-control border-light-subtle bg-light-subtle rounded-3 py-2 ${error ? "is-invalid" : ""}`}
               placeholder="Add a new task..."
               value={inputValue}
               onChange={(e) => {
@@ -128,11 +143,10 @@ const Task = () => {
               La tarea no puede estar vacía
             </div>
           </div>
-
           <div className="col-auto">
             <button
               className="btn text-white px-4 py-2 rounded-3 d-flex align-items-center gap-1"
-              style={{ backgroundColor: "#7c08a0ff", border: "none" }}
+              style={{ backgroundColor: "#7cb39b", border: "none" }}
               onClick={handleAddTask}
               disabled={!inputValue.trim()}
             >
@@ -142,7 +156,7 @@ const Task = () => {
         </div>
       </div>
 
-      {/* SEARCH */}
+      {/* INPUT DE BÚSQUEDA */}
       <div className="position-relative mb-4">
         <span className="position-absolute top-50 start-0 translate-middle-y ps-3 text-muted">
           <BiSearch size={18} />
@@ -155,12 +169,13 @@ const Task = () => {
         />
       </div>
 
-      {/* TASK LIST */}
+      {/* SECCIÓN DE TAREAS ACTIVAS */}
       <div className="mb-3">
         <h6 className="fw-bold text-secondary d-flex align-items-center gap-2 mb-3">
           <span className="text-success">☰</span> Active Tasks ({todos.length})
         </h6>
 
+        {/* LISTADO DE TARJETAS INDEPENDIENTES */}
         <div className="d-flex flex-column gap-2">
           {todos.length > 0 ? (
             todos.map((task) => (
@@ -169,27 +184,24 @@ const Task = () => {
                 className="card border-0 shadow-sm rounded-4 p-3 bg-white d-flex flex-row justify-content-between align-items-center"
               >
                 {editingId === task.id ? (
+                  /*  MODO EDICIÓN*/
                   <div className="w-100">
                     <div className="d-flex gap-2 align-items-center">
                       <input
                         type="text"
-                        className={`form-control form-control-sm border-light-subtle rounded-3 py-2 ${
-                          editError ? "is-invalid" : ""
-                        }`}
+                        className={`form-control form-control-sm border-light-subtle rounded-3 py-2 ${editError ? "is-invalid" : ""}`}
                         value={editValue}
                         onChange={(e) => {
                           setEditValue(e.target.value);
                           if (e.target.value.trim()) setEditError(false);
                         }}
                       />
-
                       <button
                         className="btn btn-sm btn-success rounded-3 p-2 d-flex align-items-center"
                         onClick={() => handleUpdateTask(task.id)}
                       >
                         <MdCheck size={18} />
                       </button>
-
                       <button
                         className="btn btn-sm btn-light border rounded-3 p-2 d-flex align-items-center text-secondary"
                         onClick={() => {
@@ -200,37 +212,46 @@ const Task = () => {
                         <MdClose size={18} />
                       </button>
                     </div>
-
                     {editError && (
-                      <div className="text-danger small ps-1 mt-1">
+                      <div
+                        className="text-danger small ps-1 mt-1"
+                        style={{ fontSize: "0.8rem" }}
+                      >
                         El texto de la tarea no puede quedar vacío
                       </div>
                     )}
                   </div>
                 ) : (
+                  /* MODO NORMAL VISTA COMPLETA */
                   <>
                     <div className="d-flex align-items-center gap-3">
+                      {/* CÍRCULO INTERACTIVO DE CHECK */}
                       <div
-                        onClick={() => handleToggleComplete(task)}
+                        onClick={() => handleToggleComplete(task)} // <- Al hacer clic, se marca o desmarca
                         className={`rounded-circle border border-2 d-flex align-items-center justify-content-center ${
                           task.is_done
-                            ? "border-success bg-success text-white"
-                            : "border-secondary-subtle bg-white"
+                            ? "border-success bg-success text-white" // Si está lista: borde verde, fondo verde, icono blanco
+                            : "border-secondary-subtle bg-white" // Si no: tu diseño original gris
                         }`}
                         style={{
                           width: "22px",
                           height: "22px",
                           cursor: "pointer",
+                          transition: "all 0.2s",
                         }}
                       >
-                        {task.is_done && <MdCheck size={14} />}
+                        {/* Si la tarea está completada, mostramos un pequeño check de react-icons */}
+                        {task.is_done && (
+                          <MdCheck size={14} className="fw-bold" />
+                        )}
                       </div>
 
+                      {/* TEXTO DE LA TAREA */}
                       <span
                         className={`fw-medium ${
                           task.is_done
-                            ? "text-secondary text-decoration-line-through opacity-50"
-                            : "text-dark"
+                            ? "text-secondary text-decoration-line-through opacity-50" // Texto tachado y opaco
+                            : "text-dark" // Texto normal
                         }`}
                       >
                         {task.title}
@@ -247,7 +268,6 @@ const Task = () => {
                       >
                         <MdModeEdit size={20} />
                       </button>
-
                       <button
                         className="btn btn-link text-danger p-2 border-0"
                         onClick={() => handleDeleteTask(task.id)}
