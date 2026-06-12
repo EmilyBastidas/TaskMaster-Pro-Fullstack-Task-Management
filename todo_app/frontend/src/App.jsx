@@ -20,7 +20,7 @@ function App() {
           <Route path="/signup" element={<Signup />} />
           <Route path="/tasks" element={<Task />} />
 
-          <Routes
+          <Route
             path="*"
             element={
               <div className="text-center py-5">
