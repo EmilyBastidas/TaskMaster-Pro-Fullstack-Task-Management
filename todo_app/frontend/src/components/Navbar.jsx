@@ -19,7 +19,7 @@ function Navbar() {
       <div className="container">
         <a
           className="navbar-brand d-flex align-items-center fw-bold fs-4 text-light"
-          href="/login" //cambié
+          href="/" //cambié
         >
           <span className="me-2 fs-3" style={{ color: "#ac86b8ff" }}>
             <FaCheckDouble />
