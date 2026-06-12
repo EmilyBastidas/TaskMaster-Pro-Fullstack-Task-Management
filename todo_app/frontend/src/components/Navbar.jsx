@@ -21,7 +21,7 @@ function Navbar() {
           className="navbar-brand d-flex align-items-center fw-bold fs-4 text-light"
           href="/" //cambié
         >
-          <span className="me-2 fs-3" style={{ color: "#ac86b8ff" }}>
+          <span className="me-2 fs-3" style={{ color: "#7c08a0ff" }}>
             <FaCheckDouble />
           </span>
           Taskify
@@ -62,7 +62,7 @@ function Navbar() {
 
       <IoLogOutSharp
         size={27}
-        style={{ cursor: "pointer", color: "#e9eeebff" }}
+        style={{ cursor: "pointer", color: "#7c08a0ff" }}
         onClick={handleLogout}
         title="Cerrar sesión"
       />

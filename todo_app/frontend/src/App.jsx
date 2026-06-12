@@ -7,6 +7,7 @@ import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import Footer from "./components/Footer";
 import Task from "./pages/Task";
+import Dashboard from "./pages/Dashboard";
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
           <Route path="/tasks" element={<Task />} />
+          <Route path="/dashboard" element={<Dashboard />} />
 
           <Route
             path="*"

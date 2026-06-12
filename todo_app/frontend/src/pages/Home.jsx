@@ -75,7 +75,7 @@ const Home = () => {
                 className="card text-bg-light mb-3"
                 style={{ maxWidth: "18rem" }}
               >
-                <span className="fs-1 p-3 ms-2" style={{ color: "#86b89a" }}>
+                <span className="fs-1 p-3 ms-2" style={{ color: "#7c08a0ff" }}>
                   <FaBoltLightning />
                 </span>
 
@@ -94,7 +94,7 @@ const Home = () => {
                 className="card text-bg-light mb-3"
                 style={{ maxWidth: "18rem" }}
               >
-                <span className="fs-1 p-3 ms-2" style={{ color: "#86b89a" }}>
+                <span className="fs-1 p-3 ms-2" style={{ color: "#7c08a0ff" }}>
                   <RiFocus2Line />
                 </span>
                 <div className="card-body">
@@ -112,7 +112,7 @@ const Home = () => {
                 className="card text-bg-light mb-3"
                 style={{ maxWidth: "18rem" }}
               >
-                <span className="fs-1 p-3 ms-2" style={{ color: "#86b89a" }}>
+                <span className="fs-1 p-3 ms-2" style={{ color: "#7c08a0ff" }}>
                   <FaUsers />
                 </span>
                 <div className="card-body">
