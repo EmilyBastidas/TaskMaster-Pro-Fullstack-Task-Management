@@ -1,9 +1,7 @@
-import { useEffect, useState, useCallback } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { getTasks, createTask, deleteTask, updateTask } from "../api/api";
-
 import { MdDeleteForever, MdModeEdit, MdCheck, MdClose } from "react-icons/md";
-
 import { BiPlus, BiSearch } from "react-icons/bi";
 
 const Task = () => {
@@ -17,37 +15,28 @@ const Task = () => {
 
   const navigate = useNavigate();
 
-  // CARGAR TAREAS (fuente única de verdad)
-  const refreshTasks = useCallback(async () => {
+  // 🔥 FUNCIÓN CENTRAL PARA CARGAR TAREAS
+  const refreshTasks = async () => {
     try {
       const data = await getTasks();
       setTodos(Array.isArray(data) ? data : []);
     } catch (error) {
       console.error("Error cargando tareas:", error);
     }
-  }, []);
+  };
 
   useEffect(() => {
-    const init = async () => {
-      const token = localStorage.getItem("token");
+    const token = localStorage.getItem("token");
 
-      if (!token) {
-        navigate("/", { replace: true });
-        return;
-      }
+    if (!token) {
+      navigate("/");
+      return;
+    }
 
-      try {
-        const data = await getTasks();
-        setTodos(Array.isArray(data) ? data : []);
-      } catch (error) {
-        console.error("Error cargando tareas:", error);
-      }
-    };
-
-    init();
+    refreshTasks();
   }, [navigate]);
 
-  // CREAR TAREA
+  // ➕ AGREGAR TAREA
   const handleAddTask = async () => {
     if (!inputValue.trim()) {
       setError(true);
@@ -59,13 +48,13 @@ const Task = () => {
     try {
       await createTask({ title: inputValue });
       setInputValue("");
-      await refreshTasks();
+      await refreshTasks(); // 👈 importante
     } catch (error) {
       console.error("Error creando tarea:", error);
     }
   };
 
-  // ✏️ EDITAR TAREA
+  // ✏️ ACTUALIZAR TAREA
   const handleUpdateTask = async (id) => {
     if (!editValue.trim()) {
       setEditError(true);
@@ -84,7 +73,7 @@ const Task = () => {
     }
   };
 
-  // ELIMINAR
+  // 🗑️ ELIMINAR TAREA
   const handleDeleteTask = async (id) => {
     try {
       await deleteTask(id);
@@ -94,23 +83,24 @@ const Task = () => {
     }
   };
 
-  // TOGGLE COMPLETADO
+  // ✔ TOGGLE COMPLETADO
   const handleToggleComplete = async (task) => {
     try {
-      await updateTask(task.id, {
+      const updatedTaskBody = {
         ...task,
         is_done: !task.is_done,
-      });
+      };
 
+      await updateTask(task.id, updatedTaskBody);
       await refreshTasks();
     } catch (error) {
-      console.error("Error al cambiar estado:", error);
+      console.error("Error al cambiar el estado de la tarea:", error);
     }
   };
 
   return (
     <div className="container mt-5 p-5" style={{ maxWidth: "700px" }}>
-      {/* HEADER */}
+      {/* ENCABEZADO */}
       <div className="mb-4">
         <h1 className="fw-bold text-dark m-0">My Tasks</h1>
         <p className="text-muted small mt-1">
@@ -118,13 +108,13 @@ const Task = () => {
         </p>
       </div>
 
-      {/* ADD TASK */}
+      {/* AGREGAR TAREA */}
       <div className="card border-0 shadow-sm rounded-4 p-3 mb-3 bg-white">
         <div className="row g-2">
           <div className="col">
             <input
               type="text"
-              className={`form-control bg-light rounded-3 py-2 ${
+              className={`form-control border-light-subtle bg-light-subtle rounded-3 py-2 ${
                 error ? "is-invalid" : ""
               }`}
               placeholder="Add a new task..."
@@ -152,121 +142,129 @@ const Task = () => {
         </div>
       </div>
 
-      {/* SEARCH (visual only) */}
+      {/* SEARCH */}
       <div className="position-relative mb-4">
         <span className="position-absolute top-50 start-0 translate-middle-y ps-3 text-muted">
           <BiSearch size={18} />
         </span>
         <input
           type="text"
-          className="form-control bg-white rounded-3 py-2 ps-5"
+          className="form-control border-light-subtle bg-white rounded-3 py-2 ps-5"
           placeholder="Search tasks..."
           disabled
         />
       </div>
 
       {/* TASK LIST */}
-      <div className="d-flex flex-column gap-2">
-        {todos.length > 0 ? (
-          todos.map((task) => (
-            <div
-              key={task.id}
-              className="card border-0 shadow-sm rounded-4 p-3 bg-white d-flex flex-row justify-content-between align-items-center"
-            >
-              {editingId === task.id ? (
-                <div className="w-100">
-                  <div className="d-flex gap-2 align-items-center">
-                    <input
-                      type="text"
-                      className={`form-control form-control-sm ${
-                        editError ? "is-invalid" : ""
-                      }`}
-                      value={editValue}
-                      onChange={(e) => {
-                        setEditValue(e.target.value);
-                        if (e.target.value.trim()) setEditError(false);
-                      }}
-                    />
+      <div className="mb-3">
+        <h6 className="fw-bold text-secondary d-flex align-items-center gap-2 mb-3">
+          <span className="text-success">☰</span> Active Tasks ({todos.length})
+        </h6>
 
-                    <button
-                      className="btn btn-success btn-sm"
-                      onClick={() => handleUpdateTask(task.id)}
-                    >
-                      <MdCheck />
-                    </button>
+        <div className="d-flex flex-column gap-2">
+          {todos.length > 0 ? (
+            todos.map((task) => (
+              <div
+                key={task.id}
+                className="card border-0 shadow-sm rounded-4 p-3 bg-white d-flex flex-row justify-content-between align-items-center"
+              >
+                {editingId === task.id ? (
+                  <div className="w-100">
+                    <div className="d-flex gap-2 align-items-center">
+                      <input
+                        type="text"
+                        className={`form-control form-control-sm border-light-subtle rounded-3 py-2 ${
+                          editError ? "is-invalid" : ""
+                        }`}
+                        value={editValue}
+                        onChange={(e) => {
+                          setEditValue(e.target.value);
+                          if (e.target.value.trim()) setEditError(false);
+                        }}
+                      />
 
-                    <button
-                      className="btn btn-light btn-sm border"
-                      onClick={() => {
-                        setEditingId(null);
-                        setEditError(false);
-                      }}
-                    >
-                      <MdClose />
-                    </button>
-                  </div>
+                      <button
+                        className="btn btn-sm btn-success rounded-3 p-2 d-flex align-items-center"
+                        onClick={() => handleUpdateTask(task.id)}
+                      >
+                        <MdCheck size={18} />
+                      </button>
 
-                  {editError && (
-                    <small className="text-danger">
-                      El texto no puede estar vacío
-                    </small>
-                  )}
-                </div>
-              ) : (
-                <>
-                  <div className="d-flex align-items-center gap-3">
-                    <div
-                      onClick={() => handleToggleComplete(task)}
-                      className={`rounded-circle border d-flex align-items-center justify-content-center ${
-                        task.is_done
-                          ? "border-success bg-success text-white"
-                          : "border-secondary"
-                      }`}
-                      style={{
-                        width: "22px",
-                        height: "22px",
-                        cursor: "pointer",
-                      }}
-                    >
-                      {task.is_done && <MdCheck size={14} />}
+                      <button
+                        className="btn btn-sm btn-light border rounded-3 p-2 d-flex align-items-center text-secondary"
+                        onClick={() => {
+                          setEditingId(null);
+                          setEditError(false);
+                        }}
+                      >
+                        <MdClose size={18} />
+                      </button>
                     </div>
 
-                    <span
-                      className={
-                        task.is_done
-                          ? "text-decoration-line-through text-muted"
-                          : ""
-                      }
-                    >
-                      {task.title}
-                    </span>
+                    {editError && (
+                      <div className="text-danger small ps-1 mt-1">
+                        El texto de la tarea no puede quedar vacío
+                      </div>
+                    )}
                   </div>
+                ) : (
+                  <>
+                    <div className="d-flex align-items-center gap-3">
+                      <div
+                        onClick={() => handleToggleComplete(task)}
+                        className={`rounded-circle border border-2 d-flex align-items-center justify-content-center ${
+                          task.is_done
+                            ? "border-success bg-success text-white"
+                            : "border-secondary-subtle bg-white"
+                        }`}
+                        style={{
+                          width: "22px",
+                          height: "22px",
+                          cursor: "pointer",
+                        }}
+                      >
+                        {task.is_done && <MdCheck size={14} />}
+                      </div>
 
-                  <div className="d-flex gap-1">
-                    <button
-                      className="btn btn-link text-secondary"
-                      onClick={() => {
-                        setEditingId(task.id);
-                        setEditValue(task.title);
-                      }}
-                    >
-                      <MdModeEdit />
-                    </button>
+                      <span
+                        className={`fw-medium ${
+                          task.is_done
+                            ? "text-secondary text-decoration-line-through opacity-50"
+                            : "text-dark"
+                        }`}
+                      >
+                        {task.title}
+                      </span>
+                    </div>
 
-                    <button
-                      className="btn btn-link text-danger"
-                      onClick={() => handleDeleteTask(task.id)}
-                    >
-                      <MdDeleteForever />
-                    </button>
-                  </div>
-                </>
-              )}
+                    <div className="d-flex gap-1">
+                      <button
+                        className="btn btn-link text-secondary p-2 border-0"
+                        onClick={() => {
+                          setEditingId(task.id);
+                          setEditValue(task.title);
+                        }}
+                      >
+                        <MdModeEdit size={20} />
+                      </button>
+
+                      <button
+                        className="btn btn-link text-danger p-2 border-0"
+                        onClick={() => handleDeleteTask(task.id)}
+                      >
+                        <MdDeleteForever size={22} />
+                      </button>
+                    </div>
+                  </>
+                )}
+              </div>
+            ))
+          ) : (
+            <div className="text-center py-4 text-muted bg-white rounded-4 shadow-sm">
+              No tienes tareas activas hoy
             </div>
-          ))
-        ) : (
-          <div className="text-center text-muted">No tienes tareas aún</div>
-        )}
+          )}
+        </div>
       </div>
     </div>
   );
