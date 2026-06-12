@@ -1,5 +1,6 @@
 import { Routes, Route } from "react-router-dom";
 import "./App.css";
+import { AuthProvider } from "./AuthContext";
 
 import Navbar from "./components/Navbar";
 import Home from "./pages/Home";
@@ -10,30 +11,31 @@ import Task from "./pages/Task";
 
 function App() {
   return (
-    <div className="d-flex flex-column min-vh-100">
-      <Navbar />
+    <AuthProvider>
+      <div className="d-flex flex-column min-vh-100">
+        <Navbar />
 
-      <main className="flex-grow-1">
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/signup" element={<Signup />} />
-          <Route path="/tasks" element={<Task />} />
+        <main className="flex-grow-1">
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/signup" element={<Signup />} />
+            <Route path="/tasks" element={<Task />} />
+            <Route
+              path="*"
+              element={
+                <div className="text-center py-5">
+                  <h1>404 - Página no encontrada</h1>
+                  <p>Lo sentimos, esta página no existe.</p>
+                </div>
+              }
+            />
+          </Routes>
+        </main>
 
-          <Route
-            path="*"
-            element={
-              <div className="text-center py-5">
-                <h1>404 - Página no encontrada</h1>
-                <p>Lo sentimos, esta página no existe.</p>
-              </div>
-            }
-          />
-        </Routes>
-      </main>
-
-      <Footer />
-    </div>
+        <Footer />
+      </div>
+    </AuthProvider>
   );
 }
 
