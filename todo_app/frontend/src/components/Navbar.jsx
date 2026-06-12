@@ -19,9 +19,9 @@ function Navbar() {
       <div className="container">
         <a
           className="navbar-brand d-flex align-items-center fw-bold fs-4 text-light"
-          href="/"
+          href="/login" //cambié
         >
-          <span className="me-2 fs-3" style={{ color: "#86b89a" }}>
+          <span className="me-2 fs-3" style={{ color: "#ac86b8ff" }}>
             <FaCheckDouble />
           </span>
           Taskify
@@ -42,7 +42,7 @@ function Navbar() {
         <div className="collapse navbar-collapse" id="navbarNav">
           <ul className="navbar-nav ms-auto align-items-center">
             <li className="nav-item">
-              <Link className="nav-link active text-white" to="/">
+              <Link className="nav-link active text-white" to="/dashboard">
                 Dashboard
               </Link>
             </li>
